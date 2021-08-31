@@ -14,10 +14,9 @@ class VCSDSL {
     void github(String remoteRepository, String workingBranch){
         println AppUtils.colorTextInFadeRed("[GITHUB] cloning ")
         println AppUtils.colorTextInCian("git clone "+ remoteRepository)
-        String gitCLoneCmd = "git clone $remoteRepository source-code && cd ./source-code && git checkout $workingBranch && ls -a";
-        final def execute = ProcessGroovyMethods.execute(gitCLoneCmd,[],new File("."))
-        DefaultGroovyMethods.inspect(execute);
-        String cmd = "git checkout $workingBranch && ls ";
-        println ProcessGroovyMethods.execute(cmd,[],new File("./source-code")).inspect()
+        String gitCLoneCmd = "git clone $remoteRepository source-code ";
+        println ProcessGroovyMethods.execute(gitCLoneCmd,[],new File(".")).text
+        String cmd = "ls -a";
+        println ProcessGroovyMethods.execute(cmd,[],new File("./source-code")).text
     }
 }
