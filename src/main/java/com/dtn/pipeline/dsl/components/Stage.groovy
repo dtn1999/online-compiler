@@ -1,0 +1,27 @@
+package com.dtn.pipeline.dsl.components
+
+import com.dtn.pipeline.dsl.utils.AppUtils
+
+/**
+ * @Created 31/08/2021-16:30
+ * @Project pipline-dsl-runner
+ * @author danyls ngongang
+ */
+class Stage {
+
+    private Closure closure
+    private String name
+
+    Stage(String name, Closure closure){
+        this.name = name
+        this.closure = closure
+    }
+
+    void run(){
+        println AppUtils.colorTextInGreen("[Stage] " + name + "...")
+        final StageDSL dsl = new StageDSL()
+        closure.delegate = dsl
+        closure.resolveStrategy = Closure.DELEGATE_ONLY
+        closure.call()
+    }
+}
