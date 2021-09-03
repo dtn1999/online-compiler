@@ -1,0 +1,46 @@
+package com.dtn.pipeline
+/**
+ * @Created 31/08/2021-15:59
+ * @Project pipeline-dsl-runner
+ * @author danyls ngongang
+ */
+import static com.dtn.pipeline.dsl.DSL.pipeline
+println '''
+,------.  ,--. ,------.  ,------. ,--.    ,--. ,--.  ,--. ,------.         ,------.    ,---.   ,--.            ,------.  ,--. ,--. ,--.  ,--. ,--.  ,--. ,------. ,------.
+|  .--. ' |  | |  .--. ' |  .---' |  |    |  | |  ,'.|  | |  .---' ,-----. |  .-.  \\  '   .-'  |  |    ,-----. |  .--. ' |  | |  | |  ,'.|  | |  ,'.|  | |  .---' |  .--. '
+|  '--' | |  | |  '--' | |  `--,  |  |    |  | |  |' '  | |  `--,  '-----' |  |  \\  : `.  `-.  |  |    '-----' |  '--'.' |  | |  | |  |' '  | |  |' '  | |  `--,  |  '--'.'
+|  | --'  |  | |  | --'  |  `---. |  '--. |  | |  | `   | |  `---.         |  '--'  / .-'    | |  '--.         |  |\\  \\  '  '-'  ' |  | `   | |  | `   | |  `---. |  |\\  \\
+`--'      `--' `--'      `------' `-----' `--' `--'  `--' `------'         `-------'  `-----'  `-----'         `--' '--'  `-----'  `--'  `--' `--'  `--' `------' `--' '--'
+'''
+
+pipeline {
+
+    vcs {
+        github('https://github.com/dtn1999/hackernews-node.git','master')
+    }
+
+    environment {
+        DB_PASSWORD = "#Danyls202x"
+        DB_USERNAME = "admin"
+    }
+
+    stages {
+        stage("build") {
+            steps {
+                echo("Hello world!!")
+            }
+        }
+
+        stage("test") {
+            steps {
+                echo("Hello world!!")
+            }
+        }
+        stage("deployment") {
+            steps {
+                echo("Hello world!!")
+            }
+        }
+    }
+
+}

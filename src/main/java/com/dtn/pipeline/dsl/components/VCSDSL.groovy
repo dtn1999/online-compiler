@@ -15,8 +15,13 @@ class VCSDSL {
         println AppUtils.colorTextInFadeRed("[GITHUB] cloning ")
         println AppUtils.colorTextInCian("git clone "+ remoteRepository)
         String gitCLoneCmd = "git clone $remoteRepository source-code ";
-        println ProcessGroovyMethods.execute(gitCLoneCmd,[],new File(".")).text
-        String cmd = "ls -a";
-        println ProcessGroovyMethods.execute(cmd,[],new File("./source-code")).text
+        final Process process = ProcessGroovyMethods.execute(gitCLoneCmd,[],new File("."))
+        process.waitFor()
+        if( process.exitValue() == 0){
+            println process.text
+            String cmd = "ls -a";
+            println ProcessGroovyMethods.execute(cmd,[],new File("./source-code")).text
+        }
+
     }
 }

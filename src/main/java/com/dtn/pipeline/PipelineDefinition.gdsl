@@ -1,4 +1,4 @@
-package com.dtn.pipeline.dsl
+package com.dtn.pipeline
 /**
  * @Created 31/08/2021-15:59
  * @Project pipeline-dsl-runner
@@ -26,6 +26,17 @@ pipeline {
 
     stages {
         stage("build") {
+            steps {
+                echo("Hello world!!")
+            }
+        }
+
+        stage("test") {
+            steps {
+                echo("Hello world!!")
+            }
+        }
+        stage("deployment") {
             steps {
                 echo("Hello world!!")
             }
