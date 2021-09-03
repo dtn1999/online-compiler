@@ -19,6 +19,9 @@ spring:
             accessTokenUri: https://github.com/login/oauth/access_token
             userAuthorizationUri: https://github.com/login/oauth/authorize
             clientAuthenticationScheme: form
-            allow_signup: true
+        provider:
+          github:
+            user-info-uri: https://api.github.com/user
+            prefer-token-info: false
 
 
