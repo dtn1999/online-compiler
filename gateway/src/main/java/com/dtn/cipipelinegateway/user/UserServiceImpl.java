@@ -1,6 +1,8 @@
 package com.dtn.cipipelinegateway.user;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 /**
  * @author danyls ngongang
@@ -8,12 +10,15 @@ import org.springframework.stereotype.Service;
  * @Project ci-pipeline-gateway
  */
 @Service
-public class UserService implements IUserService{
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService{
 
-    private final U
+
+    private final LoginDetailsRepository loginDetailsRepository;
 
     @Override
-    public UserLoginDetails save(UserLoginDetails loginDetails) {
-        return null;
+    public Mono<LoginDetails> save(LoginDetails loginDetails) {
+
+        return loginDetailsRepository.save(loginDetails);
     }
 }

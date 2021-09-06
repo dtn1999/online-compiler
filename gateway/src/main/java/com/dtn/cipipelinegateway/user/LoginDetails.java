@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
 /**
@@ -15,27 +15,27 @@ import java.time.Instant;
  * @Created 05/09/2021-07:16
  * @Project ci-pipeline-gateway
  */
-@Entity
+@Document
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLoginDetails {
+public class LoginDetails {
     @Id
     private String id;
 
-    @Column( nullable = false)
+    @NotNull
     private String provider;
 
-    @Column( nullable = false )
+    @NotNull
     private String clientId;
 
-    @Column( nullable = false)
+    @NotNull
     private String accessToken;
 
-    @Column( nullable = false)
+    @NotNull
     private String refreshToken;
 
-    @Column(nullable = false)
+    @NotNull
     private Instant expireAt;
 }
