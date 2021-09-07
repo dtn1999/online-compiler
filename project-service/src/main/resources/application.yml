@@ -3,14 +3,16 @@ server:
 
 spring:
   application:
-    name: project-service-${random.uuid}
+    name: project-service
 
   data:
     mongodb:
       host: localhost
       port: 27017
-      database: pipeline
+      database: admin
       username: root
       password: test
 
-
+eureka:
+  instance:
+    instance-id: ${spring.application.name}-${random.uuid}

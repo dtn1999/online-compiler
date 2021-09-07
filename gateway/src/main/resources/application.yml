@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ci-pipeline-gateway-${random.uuid}
+    name: gateway
   # security layer
 
   security:
@@ -26,9 +26,26 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      database: pipeline
+      database: admin
       username: root
       password: test
+
   main:
     allow-bean-definition-overriding: true
 
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+
+      routes:
+        - id: projects
+          uri: lb://PROJECT-SERVICE
+          predicates:
+            - Path=/api/projects/**
+          filters:
+            - TokenRelay
+eureka:
+  instance:
+    instance-id: ${spring.application.name}-${random.uuid}

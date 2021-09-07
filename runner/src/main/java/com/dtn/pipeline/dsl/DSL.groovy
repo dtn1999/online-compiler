@@ -8,6 +8,7 @@ import com.dtn.pipeline.dsl.components.PipelineDSL
  * @author danyls ngongang
  */
 class DSL {
+    String baseDirectory =""    ;
     static void pipeline(@DelegatesTo(value = PipelineDSL, strategy = Closure.DELEGATE_ONLY) final Closure closure){
         final PipelineDSL dsl = new PipelineDSL();
         closure.delegate = dsl

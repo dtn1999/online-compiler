@@ -5,25 +5,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
-import org.springframework.security.config.oauth2.client.CommonOAuth2Provider;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.InMemoryReactiveOAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.ReactiveOAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
-import org.springframework.security.oauth2.client.registration.ClientRegistrations;
-import org.springframework.security.oauth2.client.registration.InMemoryReactiveClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.ReactiveClientRegistrationRepository;
-import org.springframework.security.oauth2.client.web.reactive.function.client.ServerOAuth2AuthorizedClientExchangeFilterFunction;
-import org.springframework.security.oauth2.client.web.server.ServerOAuth2AuthorizedClientRepository;
 import org.springframework.security.web.server.SecurityWebFilterChain;
-import org.springframework.security.web.server.WebFilterExchange;
-import org.springframework.security.web.server.authentication.RedirectServerAuthenticationSuccessHandler;
-import org.springframework.security.web.server.authentication.ServerAuthenticationSuccessHandler;
-import org.springframework.security.web.server.authentication.WebFilterChainServerAuthenticationSuccessHandler;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.config.EnableWebFlux;
 
 /**
  * @author danyls ngongang
@@ -31,6 +16,7 @@ import org.springframework.web.reactive.function.client.WebClient;
  * @Project ci-pipeline-gateway
  */
 @EnableWebFluxSecurity
+@EnableWebFlux
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -40,6 +26,9 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http){
         http
+
+                .csrf().disable()
+                .authorizeExchange( exchangeSpec -> exchangeSpec.anyExchange().authenticated())
                 .oauth2Login()
                 .clientRegistrationRepository( clientRegistrationRepository )
                 .authenticationSuccessHandler( auth2LoginSuccessHandler )
