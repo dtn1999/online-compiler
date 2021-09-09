@@ -1,5 +1,6 @@
 package com.dtn.pipeline.dsl.components
 
+import com.dtn.pipeline.domain.DomainStage
 import com.dtn.pipeline.dsl.utils.AppUtils
 
 /**
@@ -18,7 +19,8 @@ class Stage {
     }
 
     void run(){
-        println AppUtils.colorTextInGreen("[Stage] " + name + "...")
+        println AppUtils.colorTextInGreen("[DomainStage] " + name + "...")
+        DomainStage stage = DomainStage.name("name").build;
         final StageDSL dsl = new StageDSL()
         closure.delegate = dsl
         closure.resolveStrategy = Closure.DELEGATE_ONLY

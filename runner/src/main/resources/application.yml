@@ -4,10 +4,12 @@ server:
 spring:
   application:
     name: pipeline-dsl-runner
+
   rabbitmq:
     host: localhost
     username: guest
     password: guest
+
   security:
     oauth2:
       client:
@@ -23,5 +25,10 @@ spring:
           github:
             user-info-uri: https://api.github.com/user
             prefer-token-info: false
-
+  data:
+    mongodb:
+      username: root
+      password: test
+      database: admin
+      port: 27017
 

@@ -27,13 +27,14 @@ pipeline {
     stages {
         stage("build") {
             steps {
-                echo("Hello world!!")
+                sh("yarn install")
+                sh("yarn start")
             }
         }
 
         stage("test") {
             steps {
-                echo("Hello world!!")
+                echo("npm run test")
             }
         }
         stage("deployment") {
