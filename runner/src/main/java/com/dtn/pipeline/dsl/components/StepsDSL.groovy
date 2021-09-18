@@ -2,7 +2,7 @@ package com.dtn.pipeline.dsl.components
 
 import com.dtn.pipeline.dsl.DSL
 import com.dtn.pipeline.dsl.utils.AppUtils
-import org.codehaus.groovy.runtime.ProcessGroovyMethods
+import com.dtn.pipeline.dsl.utils.OutputRedirect
 
 /**
  * @Created 31/08/2021-16:31
@@ -12,7 +12,8 @@ import org.codehaus.groovy.runtime.ProcessGroovyMethods
 class StepsDSL {
     void sh(String script){
         Process process = script.execute([],new File("/$DSL.workingDirectory"))
-        process.waitForProcessOutput(System.out, System.err)
+        final OutputRedirect outputSource =  new OutputRedirect(Stage.domainStage);
+        process.waitForProcessOutput(outputSource , outputSource)
     }
 
     void echo(String message){

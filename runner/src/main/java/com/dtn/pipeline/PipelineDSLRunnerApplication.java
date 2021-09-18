@@ -2,6 +2,7 @@ package com.dtn.pipeline;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 /**
  * @author danyls ngongang
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class PipelineDSLRunnerApplication {
     public static void main(String[] args){
+
         SpringApplication.run(PipelineDSLRunnerApplication.class);
     }
 }

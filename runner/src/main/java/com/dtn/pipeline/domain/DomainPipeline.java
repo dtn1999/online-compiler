@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -19,10 +20,19 @@ import java.util.Set;
 @AllArgsConstructor
 @Data
 @Builder
-public class Pipeline {
+public class DomainPipeline {
   private String id;
-  private Boolean status;
+  private Boolean success;
+  private Boolean running;
+  private Boolean finished;
 
   @DBRef
-  private Set<DomainStage> stages;
+  private Set<DomainStage> stages = new HashSet<>();
+
+  public void addStage(DomainStage domainStage) {
+    if( stages == null ){
+      stages = new HashSet<>();
+    }
+    stages.add( domainStage );
+  }
 }

@@ -7,12 +7,14 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author danyls ngongang
  * @Created 09/09/2021-07:23
  * @Project runner
  */
-@Document
+@Document( collation = "stage")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +22,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class DomainStage {
     @Id
     private String id;
+
+    @NotNull
     private String name;
-    private String output;
     private Boolean success;
+    private Boolean running;
+    private Boolean finished;
+    private String output;
+
+    public static  DomainStage init(){
+        return  DomainStage.builder()
+                .name("")
+                .output("")
+                .running( true)
+                .finished( false )
+                .success( false )
+                .build();
+    }
 }

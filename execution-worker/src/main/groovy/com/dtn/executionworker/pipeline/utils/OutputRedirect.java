@@ -1,7 +1,8 @@
-package com.dtn.pipeline.dsl.utils;
+package com.dtn.executionworker.dsl.utils;
 
-import com.dtn.pipeline.config.BeansGetter;
-import com.dtn.pipeline.domain.DomainStage;
+import com.dtn.executionworker.domain.StageDocument;
+import com.dtn.executionworker.domain.StageRepository;
+import com.dtn.executionworker.dsl.components.Stage;
 
 import java.io.IOException;
 
@@ -11,14 +12,18 @@ import java.io.IOException;
  * @Project runner
  */
 public class OutputRedirect implements Appendable {
-    private DomainStage stage;
-    public  OutputRedirect(DomainStage stage){
+    private final StageRepository stageRepository;
+    private final StageDocument stage ;
+
+    public OutputRedirect(StageDocument stage, StageRepository stageRepository) {
+        this.stageRepository = stageRepository;
         this.stage = stage;
     }
+
     @Override
     public Appendable append(CharSequence csq) throws IOException {
-        stage.setOutput( stage.getOutput() + csq);
-        BeansGetter.domainStageRepository().save( stage );
+        stage.setOutPut( stage.getOutPut() + csq);
+        stageRepository.save( stage );
         return this;
     }
 
