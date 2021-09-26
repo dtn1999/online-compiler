@@ -12,6 +12,6 @@ import java.io.File;
 public class RabbitMQConsumer {
 
     public static void test(){
-        ScriptRunner.runScript(new File("/home/dtn-1999/GITHUB/languages/dsl/pipline-dsl-runner/src/main/java/com/dtn/pipeline/PipelineDefinition.gdsl"));
+        ScriptRunner.runScript(new File("/home/dtn-1999/GITHUB/languages/dsl/pipline-dsl-runner/src/main/java/com/dtn/pipeline/pipeline.gdsl"));
     }
 }

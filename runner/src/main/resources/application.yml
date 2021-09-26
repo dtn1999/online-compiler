@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8089
 
 spring:
   application:
@@ -11,25 +11,27 @@ spring:
     password: guest
   data:
     mongodb:
-      username: root
-      password: test
       host: localhost
       port: 27017
-      database: admin
-
-  security:
-    oauth2:
-      client:
-        registration:
-          github:
-            client-id: Iv1.f4d28dae012cb15c
-            client-secret: 59d3978cdbd03a4ebbb1a7c32337d0a5e1158ad2
-            redirect-uri: https://4543dd7e28ff10.localhost.run/login/oauth2/code/github
-            accessTokenUri: https://github.com/login/oauth/access_token
-            userAuthorizationUri: https://github.com/login/oauth/authorize
-            clientAuthenticationScheme: form
-        provider:
-          github:
-            user-info-uri: https://api.github.com/user
-            prefer-token-info: false
+      database: test
+  # V4Kdd7J_uA6SRzk
+  # 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
+  web:
+    resources:
+      static-locations: /static/
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          github:
+#            client-id: Iv1.f4d28dae012cb15c
+#            client-secret: 59d3978cdbd03a4ebbb1a7c32337d0a5e1158ad2
+#            redirect-uri: https://4543dd7e28ff10.localhost.run/login/oauth2/code/github
+#            accessTokenUri: https://github.com/login/oauth/access_token
+#            userAuthorizationUri: https://github.com/login/oauth/authorize
+#            clientAuthenticationScheme: form
+#        provider:
+#          github:
+#            user-info-uri: https://api.github.com/user
+#            prefer-token-info: false
 

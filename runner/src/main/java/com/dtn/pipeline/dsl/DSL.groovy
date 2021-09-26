@@ -1,9 +1,8 @@
 package com.dtn.pipeline.dsl
 
-import com.dtn.pipeline.config.BeansGetter
+
 import com.dtn.pipeline.domain.DomainPipeline
 import com.dtn.pipeline.domain.DomainStage
-import com.dtn.pipeline.domain.PipelineRepository
 import com.dtn.pipeline.dsl.components.PipelineDSL
 
 import java.nio.file.Path
@@ -19,16 +18,13 @@ class DSL {
     static  String baseDirectory = "/"+path.toString();
     static  String workingDirectory ;
     static  DomainPipeline domainPipeline;
-    static  PipelineRepository pipelineRepository;
     static  DSL INSTANCE ;
     DSL(){
-        pipelineRepository = BeansGetter.getBean("pipelineRepository")
         domainPipeline = DomainPipeline.builder()
                                     .running( true)
                                     .finished( false )
                                     .success( false)
                                     .build();
-        domainPipeline = pipelineRepository.save( domainPipeline )
     }
 
     static void pipeline(@DelegatesTo(value = PipelineDSL, strategy = Closure.DELEGATE_ONLY) final Closure closure){
@@ -49,11 +45,11 @@ class DSL {
     }
 
     static void update(){
-        pipelineRepository.save( domainPipeline )
+      //  pipelineRepository.save( domainPipeline )
     }
 
     static  void addNewStage(DomainStage stage){
         domainPipeline.addStage( stage)
-        pipelineRepository.save( domainPipeline )
+      //  pipelineRepository.save( domainPipeline )
     }
 }

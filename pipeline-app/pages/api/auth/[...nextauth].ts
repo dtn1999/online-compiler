@@ -36,6 +36,7 @@ export default NextAuth({
           expiresIn,
           refreshToken,
         };
+        // make a REST call to the gateway service to register the user if not present or login
         token.authenticatedUser = authenticatedUser;
       }
       return token;

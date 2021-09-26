@@ -1,6 +1,5 @@
 package com.dtn.pipeline.dsl.utils;
 
-import com.dtn.pipeline.config.BeansGetter;
 import com.dtn.pipeline.domain.DomainStage;
 
 import java.io.IOException;
@@ -17,8 +16,8 @@ public class OutputRedirect implements Appendable {
     }
     @Override
     public Appendable append(CharSequence csq) throws IOException {
+        System.out.println(csq);
         stage.setOutput( stage.getOutput() + csq);
-        BeansGetter.domainStageRepository().save( stage );
         return this;
     }
 

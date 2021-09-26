@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @SpringBootApplication
 public class PipelineDSLRunnerApplication {
     public static void main(String[] args){
-
         SpringApplication.run(PipelineDSLRunnerApplication.class);
     }
 }
