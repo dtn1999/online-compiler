@@ -1,4 +1,0 @@
-# exemple-groovy-dsl
-The goal of this project is to understand how to design a simple DSL using Groovy and then use this DSL in a java application that will help us simulate a pipeline deployment. The application will consist of two services:
-* The first service will be a simple Spring boot REST Service that will have for goal to get a Groovy script and then with the help of a parser that we will implement it will be possible to check if the groovy script respects the syntax of our DSL. If the received file conforms to the DSL then it is put in a Queue.
-* The second service will retrieve the file from the queue and execute it and each output is collected and saved in the Queue and reviewed to the user so that he can monitor the evolution of his pipeline, and then if the user has planned to deploy the application then the service will create and execute a container with the application and return the URL to which the user can have access to his application
