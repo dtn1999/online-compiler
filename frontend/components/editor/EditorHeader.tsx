@@ -6,6 +6,7 @@ import {
   faExpandAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Tooltip } from "@mui/material";
 import React from "react";
 
 const EditorHeader: React.FC = () => {
@@ -17,15 +18,21 @@ const EditorHeader: React.FC = () => {
         <option> JAVA </option>
       </select>
       <div className="flex flex-row items-center">
-        <div className="border w-8 h-8 flex items-center justify-center mx-2">
-          <FontAwesomeIcon icon={faDownload} />
-        </div>
-        <div className="border w-8 h-8 flex items-center justify-center mx-2">
-          <FontAwesomeIcon icon={faExpandAlt} />
-        </div>
-        <div className="border w-8 h-8 flex items-center justify-center">
-          <FontAwesomeIcon icon={faCog} />
-        </div>
+        <Tooltip title="Download Code">
+          <button className="border w-8 h-8 flex items-center justify-center ml-2">
+            <FontAwesomeIcon icon={faDownload} />
+          </button>
+        </Tooltip>
+        <Tooltip title="Open Your Code in Full Screen">
+          <button className="border w-8 h-8 flex items-center justify-center ml-2">
+            <FontAwesomeIcon icon={faExpandAlt} />
+          </button>
+        </Tooltip>
+        <Tooltip title="Open Editor Setting">
+          <button className="border w-8 h-8 flex items-center justify-center ml-2">
+            <FontAwesomeIcon icon={faCog} />
+          </button>
+        </Tooltip>
       </div>
     </div>
   );

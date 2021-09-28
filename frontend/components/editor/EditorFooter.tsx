@@ -4,7 +4,7 @@ import React from "react";
 
 const EditorFooter: React.FC = () => {
   return (
-    <>
+    <div>
       <div className="w-full border p-4 flex flex-row-reverse items-center justify-between">
         <div className="border w-8 h-8 flex items-center justify-center">
           <FontAwesomeIcon icon={faSyncAlt} />
@@ -35,7 +35,7 @@ const EditorFooter: React.FC = () => {
           </textarea>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

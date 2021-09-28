@@ -11,6 +11,10 @@ module.exports = {
           btnFocus: "#B1DAFA",
         },
       },
+      height: {
+        editor: "748px",
+        editorContainer: "962px",
+      },
     },
   },
   variants: {
