@@ -60,7 +60,7 @@ const EditeurMenu: React.FC<Props> = ({
           <select onChange={formik.handleChange("theme")} className="w-full">
             {defaultValues.theme.map((theme) => (
               <option key={theme} value={theme}>
-                {theme.replaceAll("_", " ")}
+                {theme}
               </option>
             ))}
           </select>
