@@ -1,4 +1,10 @@
-import { faDownload, faCog } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  faCog,
+  faExchangeAlt,
+  faExpand,
+  faExpandAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
@@ -13,6 +19,9 @@ const EditorHeader: React.FC = () => {
       <div className="flex flex-row items-center">
         <div className="border w-8 h-8 flex items-center justify-center mx-2">
           <FontAwesomeIcon icon={faDownload} />
+        </div>
+        <div className="border w-8 h-8 flex items-center justify-center mx-2">
+          <FontAwesomeIcon icon={faExpandAlt} />
         </div>
         <div className="border w-8 h-8 flex items-center justify-center">
           <FontAwesomeIcon icon={faCog} />

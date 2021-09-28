@@ -27,7 +27,10 @@ const EditorFooter: React.FC = () => {
           <p className="text-codeChef py-2"> Custom Input </p>
         </div>
         <div className="w-full">
-          <textarea className="p-0 w-full  ring-gray-500 focus:outline-none  focus:border-gray-500 focus:ring-gray-500">
+          <textarea
+            rows={5}
+            className="p-0 w-full  ring-gray-500 focus:outline-none  focus:border-gray-500 focus:ring-gray-500"
+          >
             {" "}
           </textarea>
         </div>
