@@ -2,11 +2,15 @@ import { faSyncAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-const EditorFooter: React.FC = () => {
+interface Props {
+  handleFileSelect: (e: any) => void;
+}
+const EditorFooter: React.FC<Props> = ({ handleFileSelect }) => {
   const [showOutput, setShowOuput] = React.useState<boolean>(true);
   const closeOutputPanel = () => {
     setShowOuput(false);
   };
+
   return (
     <div>
       <div className="w-full border p-4 flex flex-row-reverse items-center justify-between">
@@ -16,9 +20,14 @@ const EditorFooter: React.FC = () => {
       </div>
       {/* buttons to handle submission and file upload */}
       <div className="py-5 w-full flex flex-row justify-between items-center">
-        <button className="bg-codeChef-btn text-white py-2 text-sm px-5 focus:outline-none focus:ring-2 focus:ring-codeChef-btnFocus hover:bg-gray-500">
+        <span className="relative bg-codeChef-btn text-white py-2 text-sm px-5 focus:outline-none focus:ring-2 focus:ring-codeChef-btnFocus hover:bg-gray-500 cursor-pointer">
           Open File
-        </button>
+          <input
+            type="file"
+            onChange={handleFileSelect}
+            className="absolute inset-0 text-right opacity-0 outline-none cursor-pointer block text-transparent filter-none "
+          />
+        </span>
         <div className="flex flex-row">
           <button className="mx-3 bg-codeChef-btn text-white py-2 text-sm px-5 focus:outline-none focus:ring-2 focus:ring-codeChef-btnFocus hover:bg-gray-500">
             run

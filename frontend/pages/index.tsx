@@ -27,7 +27,16 @@ const Home: NextPage = () => {
     console.log(values);
     setEditorSettings({ ...values });
   }, []);
+  const handleFileLoad = (ev: ProgressEvent<FileReader>) => {
+    setCode(ev.target?.result?.toString() || "");
+  };
 
+  const handleFileSelect = (event: any) => {
+    console.log("event");
+    const reader = new FileReader();
+    reader.onload = handleFileLoad;
+    reader.readAsText(event.target.files[0]);
+  };
   return (
     <div className="px-40 pt-6 pb-10 bg-gray-100  w-full max-h-full flex flex-col items-center">
       <div className="bg-white shadow-2xl pt-16 px-20 min-h-full pb-10 w-3/4 h-full flex flex-col">
@@ -53,7 +62,7 @@ const Home: NextPage = () => {
               tabSize: editorSettings.tabSize,
             }}
           />
-          <EditorFooter />
+          <EditorFooter handleFileSelect={handleFileSelect} />
         </div>
       </div>
     </div>
