@@ -9,6 +9,7 @@ module.exports = {
           blue: "#3b5998",
           btn: "#1D1F21",
           btnFocus: "#B1DAFA",
+          bgOutPut: "#F8F9FA",
         },
       },
       height: {

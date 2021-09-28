@@ -1,8 +1,12 @@
-import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSyncAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 const EditorFooter: React.FC = () => {
+  const [showOutput, setShowOuput] = React.useState<boolean>(true);
+  const closeOutputPanel = () => {
+    setShowOuput(false);
+  };
   return (
     <div>
       <div className="w-full border p-4 flex flex-row-reverse items-center justify-between">
@@ -29,11 +33,71 @@ const EditorFooter: React.FC = () => {
         <div className="w-full">
           <textarea
             rows={5}
+            value={""}
+            onChange={() => {}}
             className="p-0 w-full  ring-gray-500 focus:outline-none  focus:border-gray-500 focus:ring-gray-500"
           >
             {" "}
           </textarea>
         </div>
+        {/*  output for the program  */}
+        {showOutput && (
+          <div className="flex border flex-col w-full mt-2">
+            <div className="w-full bg-codeChef-bgOutPut border  p-4 flex flex-row items-center justify-between">
+              {/*  status  */}
+              <div className="py-2 flex-row items-center">
+                <span className="font-bold text-codeChef text-md py-2">
+                  Status{"   "}
+                </span>
+                <span className="text-sm text-gray-500">
+                  Time limit exceeded
+                </span>
+              </div>
+              {/*  date */}
+              <div className="py-2 flex-row items-center">
+                <span className="font-bold text-codeChef text-md py-2">
+                  Date{"   "}
+                </span>
+                <span className="text-sm text-gray-500">
+                  {new Date().toISOString()}
+                </span>
+              </div>
+              {/*  Execution time  */}
+              <div className="py-2 flex-row items-center">
+                <span className="font-bold text-codeChef text-md py-2">
+                  Time{"   "}
+                </span>
+                <span className="text-sm text-gray-500">5 sec</span>
+              </div>
+              {/*  Memory usage  */}
+              <div className="py-2 flex-row items-center">
+                <span className="font-bold text-codeChef text-md py-2">
+                  Mem{"   "}
+                </span>
+                <span className="text-sm text-gray-500">15.232kB</span>
+              </div>
+              <button
+                onClick={closeOutputPanel}
+                className="border w-8 h-8 flex items-center justify-center ml-10"
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
+            </div>
+            <div className="w-full p-4">
+              <div className="w-full">
+                <p className="text-codeChef py-2"> Output </p>
+              </div>
+              <textarea
+                rows={5}
+                value={""}
+                onChange={() => {}}
+                className="p-0 w-full  ring-gray-500 focus:outline-none  focus:border-gray-500 focus:ring-gray-500"
+              >
+                {" "}
+              </textarea>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

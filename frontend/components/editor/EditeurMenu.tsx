@@ -1,23 +1,38 @@
-import { PersonAdd, Settings, Logout } from "@mui/icons-material";
-import { Menu, MenuItem, Avatar, Divider, ListItemIcon } from "@mui/material";
-import React from "react";
+import { ContactlessOutlined } from "@mui/icons-material";
+import { Menu } from "@mui/material";
+import React, { MouseEventHandler } from "react";
+import { defaultValues } from "./editorConfig";
 
 interface Props {
   anchorEl: Element | ((element: Element) => Element) | null | undefined;
-  handleClose: () => void;
+  handleClose: (event: {}, reason: "backdropClick" | "escapeKeyDown") => void;
+  handleClick: MouseEventHandler<HTMLDivElement>;
   open: boolean;
+  formik: any;
+  handleChangeAndUpdateState: (
+    field: string,
+    e: React.ChangeEvent<any>
+  ) => void;
 }
 
-const EditeurMenu: React.FC<Props> = ({ anchorEl, handleClose, open }) => {
+const EditeurMenu: React.FC<Props> = ({
+  anchorEl,
+  handleClose,
+  handleClick,
+  open,
+  formik,
+  handleChangeAndUpdateState,
+}) => {
   return (
     <Menu
       anchorEl={anchorEl}
       open={open}
       onClose={handleClose}
-      onClick={handleClose}
+      onClick={handleClick}
       PaperProps={{
         elevation: 0,
         sx: {
+          width: "250px",
           overflow: "visible",
           filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
           mt: 1.5,
@@ -44,32 +59,46 @@ const EditeurMenu: React.FC<Props> = ({ anchorEl, handleClose, open }) => {
       transformOrigin={{ horizontal: "right", vertical: "top" }}
       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
     >
-      <div>
-        <p> Theme </p>
-        <select>
-          <option> theme 1</option>
-          <option> theme 1</option>
-          <option> theme 1</option>
-          <option> theme 1</option>
-          <option> theme 1</option>
-          <option> theme 1</option>
-        </select>
-      </div>
-      <div>
-        <p> Tab Size </p>
-        <input type="number" name="" id="" />
-      </div>
-      <div>
-        <p> Font Size </p>
-        <input type="number" name="" id="" />
-      </div>
-      <div>
-        <input type="checkbox" name="" id="" />
-        <span> Enable Autocomplete </span>
-      </div>
-      <div>
-        <input type="checkbox" name="" id="" />
-        <span> Show Line Numbers </span>
+      <div className="w-full h-full p-2">
+        <div className="w-full py-1">
+          <p className="font-bold text-codeChef text-md py-2"> Theme </p>
+          <select
+            onChange={(event) => {
+              handleChangeAndUpdateState("theme", event);
+            }}
+            className="w-full"
+          >
+            {defaultValues.theme.map((theme) => (
+              <option key={theme} value={theme}>
+                {theme.replaceAll("_", " ")}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="w-full py-1">
+          <p className="font-bold text-codeChef text-md py-2"> Tab Size </p>
+          <input
+            onChange={(event) => {
+              handleChangeAndUpdateState("tabSize", event);
+            }}
+            value={formik.values.tabSize}
+            className="w-full"
+            type="number"
+            min={0}
+          />
+        </div>
+        <div className="w-full py-1">
+          <p className="font-bold text-codeChef text-md py-2"> Font Size </p>
+          <input
+            onChange={(event) => {
+              handleChangeAndUpdateState("fontSize", event);
+            }}
+            value={formik.values.fontSize}
+            className="w-full"
+            type="number"
+            min={0}
+          />
+        </div>
       </div>
     </Menu>
   );
