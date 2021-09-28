@@ -33,10 +33,13 @@ const Home: NextPage = () => {
   });
 
   // handles
-  const UpdateEditorState = React.useCallback((values: UserEditorSetting) => {
-    setEditorSettings({ ...formik.values });
-    console.log(formik.values);
-  }, []);
+  const UpdateEditorState = React.useCallback(
+    (values: UserEditorSetting) => {
+      setEditorSettings({ ...formik.values });
+      console.log(formik.values);
+    },
+    [formik.values]
+  );
 
   React.useEffect(() => {
     setEditorSettings({ ...formik.values });
