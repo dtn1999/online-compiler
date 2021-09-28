@@ -18,6 +18,6 @@ export const userEditorSettingInitialValues:UserEditorSetting = {
 
 
 export const defaultValues=  {
-    theme: ["ambiance","chaos","chrome","clouds_midnight","clouds","cobalt","crimson_editor","dawn","dracula","dreamweaver","eclipse","github","gob","gruvbox","idle_finders","iplastic","katzenmilch","tomorow_night_blus","tomrrow_night"],
+    theme: ["ambiance","chaos","chrome","clouds_midnight","clouds","cobalt","crimson_editor","dawn","dracula","dreamweaver","eclipse","github","gob","monokai","gruvbox","idle_finders","iplastic","katzenmilch","tomorow_night_blus","tomrrow_night"],
 
 }

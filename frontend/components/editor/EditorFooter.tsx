@@ -4,8 +4,12 @@ import React from "react";
 
 interface Props {
   handleFileSelect: (e: any) => void;
+  handleRunClick: () => void;
 }
-const EditorFooter: React.FC<Props> = ({ handleFileSelect }) => {
+const EditorFooter: React.FC<Props> = ({
+  handleFileSelect,
+  handleRunClick,
+}) => {
   const [showOutput, setShowOuput] = React.useState<boolean>(true);
   const closeOutputPanel = () => {
     setShowOuput(false);
@@ -29,7 +33,10 @@ const EditorFooter: React.FC<Props> = ({ handleFileSelect }) => {
           />
         </span>
         <div className="flex flex-row">
-          <button className="mx-3 bg-codeChef-btn text-white py-2 text-sm px-5 focus:outline-none focus:ring-2 focus:ring-codeChef-btnFocus hover:bg-gray-500">
+          <button
+            onClick={handleRunClick}
+            className="mx-3 bg-codeChef-btn text-white py-2 text-sm px-5 focus:outline-none focus:ring-2 focus:ring-codeChef-btnFocus hover:bg-gray-500"
+          >
             run
           </button>
         </div>
@@ -99,6 +106,7 @@ const EditorFooter: React.FC<Props> = ({ handleFileSelect }) => {
               <textarea
                 rows={5}
                 value={""}
+                readOnly
                 onChange={() => {}}
                 className="p-0 w-full  ring-gray-500 focus:outline-none  focus:border-gray-500 focus:ring-gray-500"
               >

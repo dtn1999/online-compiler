@@ -31,6 +31,7 @@ require("ace-builds/src-noconflict/theme-tomorrow_night");
 require("ace-builds/src-noconflict/theme-tomorrow_night_blue");
 require("ace-builds/src-noconflict/theme-tomorrow_night_eighties");
 require("ace-builds/src-noconflict/theme-tomorrow_night");
+require("ace-builds/src-noconflict/theme-monokai");
 /**
  * code snippets and code autocompletion
  */
