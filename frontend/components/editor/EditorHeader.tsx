@@ -15,9 +15,10 @@ import {
 
 interface Props {
   updateEditorState: (values: UserEditorSetting) => void;
+  formik: any;
 }
 
-const EditorHeader: React.FC<Props> = ({ updateEditorState }) => {
+const EditorHeader: React.FC<Props> = ({ updateEditorState, formik }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [open, setOpen] = React.useState<boolean>(Boolean(anchorEl));
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -32,27 +33,10 @@ const EditorHeader: React.FC<Props> = ({ updateEditorState }) => {
     updateEditorState(formik.values);
   };
 
-  const handleChangeAndUpdateState = (
-    field: string,
-    event: React.ChangeEvent<any>
-  ) => {
-    formik.handleChange(field)(event);
-    updateEditorState(formik.values);
-  };
-
-  const formik = useFormik<UserEditorSetting>({
-    initialValues: { ...userEditorSettingInitialValues },
-    onSubmit: (values) => {
-      console.log(values);
-    },
-  });
-
   return (
     <div className="w-full border p-4 flex flex-row items-center justify-between">
       <select
-        onChange={(event) => {
-          handleChangeAndUpdateState("language", event);
-        }}
+        onChange={formik.handleChange("language")}
         value={formik.values.language}
         className="w-48  ring-gray-500 focus:outline-none  focus:border-gray-500 focus:ring-gray-500"
       >
@@ -82,7 +66,6 @@ const EditorHeader: React.FC<Props> = ({ updateEditorState }) => {
         </Tooltip>
         <EditorMenu
           formik={formik}
-          handleChangeAndUpdateState={handleChangeAndUpdateState}
           open={open}
           handleClose={handleClose}
           handleClick={handleClick}

@@ -6,20 +6,29 @@ type ServerLanguageType = "CPP"|"JAVA"|"PYTHON";
 
 export interface CodeSubmission {
     code: string;
-    language: ServerLanguageType
+    input: string;
+    language: ServerLanguageType,
 
 }
 
+export interface SubmissionResult {
+    verdict: string,
+    date: Date;
+    output: string;
+}
+
 //
-const SERVER_URL = `${process.env.SERVER_URL}`;
+const SERVER_URL = `http://localhost:8080/api`;
 
 export const RestClient = {
-    submitCode: async (code:string, lang: ClientLanguageType)=>{
+    submitCode: async (code:string,input:string, lang: ClientLanguageType)=>{
         const requestPayload:CodeSubmission = {
             code,
+            input,
             language: Utilities.getServerLanguage(lang)
         }
-        const {data:response} = await axios.post(`${SERVER_URL}/code`, JSON.stringify(requestPayload));
+        const {data:response} = await axios.post(`${SERVER_URL}/code`, requestPayload);
+        
         const { data:executionResult} = response;
         console.log( executionResult );
         return executionResult;

@@ -4,7 +4,8 @@ export interface UserEditorSetting {
     tabSize: number;
     autoComplete: boolean,
     lineNumbers: boolean,
-    language: "c_cpp"|"python"|"java"
+    language: "c_cpp"|"python"|"java",
+    input: string
 }
 
 export const userEditorSettingInitialValues:UserEditorSetting = {
@@ -13,7 +14,8 @@ export const userEditorSettingInitialValues:UserEditorSetting = {
     tabSize: 4,
     autoComplete: true,
     lineNumbers: true,
-    language: "c_cpp"
+    language: "c_cpp",
+    input: ""
 }
 
 

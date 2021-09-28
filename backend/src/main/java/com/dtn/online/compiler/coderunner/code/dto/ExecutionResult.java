@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 /**
  * Created by dtn1999
  * Date: 9/27/21
@@ -16,4 +19,5 @@ import lombok.NoArgsConstructor;
 public class ExecutionResult {
     private ExecutionVerdict verdict;
     private String output;
+    private LocalDateTime date;
 }

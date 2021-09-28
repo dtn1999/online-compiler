@@ -26,13 +26,17 @@ mkdir $WORK_DIR
 
 # variable declaration
 
-LANG=$1
-FILE_CONTENT=$2
-MAX_SIZE=$3
+FILE_CONTENT=$1
+INPUT=$2
+LANG=$3
+MAX_SIZE=$4
 
+INPUT_FILE="$WORK_DIR/in"
+printf "%s" "$INPUT" >> "$INPUT_FILE"
+echo
 # argument validation
 
-if [ $# -ne 3 ]
+if [ $# -ne 4 ]
 then 
 echo "not goo d"
 fi
@@ -57,7 +61,8 @@ case $LANG in
 	
 	cpp)
  		create_source_code_file cpp
-		docker run --rm -m "$MAX_SIZE" --memory-swap "$MAX_SIZE" --name "$CONTAINER_NAME" -v "$WORK_DIR":/code -w /code cpp /bin/sh -c "g++ -Wall file.cpp -o a && ./a >&1 | tee"
+		docker run --rm -m "$MAX_SIZE" --memory-swap "$MAX_SIZE" --name "$CONTAINER_NAME" -v "$WORK_DIR":/code -w /code cpp /bin/sh -c "g++ -Wall file.cpp -o a && ./a < in >&1 | tee"
+
 #		echo " "
 	 	rm -rf "$WORK_DIR"
 ;;
@@ -66,7 +71,7 @@ case $LANG in
 ;;
    py)
 		create_source_code_file py
-                docker run --rm -m "$MAX_SIZE" --memory-swap "$MAX_SIZE" --name "$CONTAINER_NAME" -v "$WORK_DIR":/code -w /code python python3 -u file.py
+                docker run --rm -m "$MAX_SIZE" --memory-swap "$MAX_SIZE" --name "$CONTAINER_NAME" -v "$WORK_DIR":/code -w /code python python3 -u file.py "$INPUT"
 #                echo " "
 		rm -rf "$WORK_DIR"
 ;;

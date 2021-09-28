@@ -1,25 +1,56 @@
 import { faSyncAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import Image from "next/image";
+import CustomCircularProgress from "./CustomCircularProgress";
+import { SubmissionResult } from "../../rest/restClient";
 
 interface Props {
   handleFileSelect: (e: any) => void;
-  handleRunClick: () => void;
+  handleRunClick: () => Promise<SubmissionResult>;
+  formik: any;
 }
+
 const EditorFooter: React.FC<Props> = ({
   handleFileSelect,
   handleRunClick,
+  formik,
 }) => {
-  const [showOutput, setShowOuput] = React.useState<boolean>(true);
+  const [showOutput, setShowOuput] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [submissionResult, setSubmissionResult] =
+    React.useState<SubmissionResult>();
+
   const closeOutputPanel = () => {
     setShowOuput(false);
   };
 
+  React.useEffect(() => {
+    if (submissionResult) {
+      setShowOuput(true);
+    }
+  }, [submissionResult]);
+
+  const onRunClick = React.useCallback(async () => {
+    setLoading(true);
+    const res = await handleRunClick();
+    setSubmissionResult(res);
+    setLoading(false);
+    setShowOuput(true);
+  }, [handleRunClick]);
   return (
     <div>
       <div className="w-full border p-4 flex flex-row-reverse items-center justify-between">
-        <div className="border w-8 h-8 flex items-center justify-center">
-          <FontAwesomeIcon icon={faSyncAlt} />
+        <div className="flex flex-row items-center">
+          {loading && (
+            <div className="flex flex-row items-center">
+              <CustomCircularProgress />
+              <span className="text-gray-300 ml-2">Running</span>
+            </div>
+          )}
+          <div className="border w-8 h-8 flex items-center justify-center ml-4">
+            <FontAwesomeIcon icon={faSyncAlt} />
+          </div>
         </div>
       </div>
       {/* buttons to handle submission and file upload */}
@@ -34,8 +65,9 @@ const EditorFooter: React.FC<Props> = ({
         </span>
         <div className="flex flex-row">
           <button
-            onClick={handleRunClick}
-            className="mx-3 bg-codeChef-btn text-white py-2 text-sm px-5 focus:outline-none focus:ring-2 focus:ring-codeChef-btnFocus hover:bg-gray-500"
+            disabled={loading}
+            onClick={onRunClick}
+            className={`mx-3 bg-codeChef-btn text-white py-2 text-sm px-5 focus:outline-none focus:ring-2 focus:ring-codeChef-btnFocus hover:bg-gray-500`}
           >
             run
           </button>
@@ -49,12 +81,10 @@ const EditorFooter: React.FC<Props> = ({
         <div className="w-full">
           <textarea
             rows={5}
-            value={""}
-            onChange={() => {}}
+            value={formik.values.input}
+            onChange={formik.handleChange("input")}
             className="p-0 w-full  ring-gray-500 focus:outline-none  focus:border-gray-500 focus:ring-gray-500"
-          >
-            {" "}
-          </textarea>
+          ></textarea>
         </div>
         {/*  output for the program  */}
         {showOutput && (
@@ -66,7 +96,7 @@ const EditorFooter: React.FC<Props> = ({
                   Status{"   "}
                 </span>
                 <span className="text-sm text-gray-500">
-                  Time limit exceeded
+                  {submissionResult?.verdict || " "}
                 </span>
               </div>
               {/*  date */}
@@ -75,7 +105,7 @@ const EditorFooter: React.FC<Props> = ({
                   Date{"   "}
                 </span>
                 <span className="text-sm text-gray-500">
-                  {new Date().toISOString()}
+                  {submissionResult?.date || new Date().toISOString()}
                 </span>
               </div>
               {/*  Execution time  */}
@@ -105,13 +135,11 @@ const EditorFooter: React.FC<Props> = ({
               </div>
               <textarea
                 rows={5}
-                value={""}
+                value={submissionResult && submissionResult.output}
                 readOnly
                 onChange={() => {}}
                 className="p-0 w-full  ring-gray-500 focus:outline-none  focus:border-gray-500 focus:ring-gray-500"
-              >
-                {" "}
-              </textarea>
+              ></textarea>
             </div>
           </div>
         )}

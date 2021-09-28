@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.concurrent.*;
 
@@ -37,9 +38,10 @@ public class CodeSubmissionService {
     public ApiResponse runCode(@NotNull CodeSubmissionDTO codeSubmissionDTO, @Valid ExecutionConstraints constraints) {
         final String code = codeSubmissionDTO.getCode();
         final String lang = codeSubmissionDTO.getLanguage().getLang();
+        final String input = codeSubmissionDTO.getInput();
         final long memoryLimit = constraints.getMemoryLimit();
         final long timeLimit = constraints.getTimeLimit();
-        final String[] cmd = {runnerScript, lang, code, "" + memoryLimit};
+        final String[] cmd = {runnerScript, code, input , lang, "" + memoryLimit};
         ProcessBuilder processBuilder = new ProcessBuilder().directory(workingDirectory).command(cmd);
         return ApiResponse.builder()
                 .data(monitoredCommandExecution(processBuilder, timeLimit))
@@ -60,7 +62,7 @@ public class CodeSubmissionService {
         String output;
         ExecutionResult executionResult = ExecutionResult.builder().build();
         try {
-            final Future<HashMap<String,Object>> executionContext = service.submit(() -> {
+            final Future<HashMap<String,Object>> executionContext = service.submit(( ) -> {
                 // start the process
                 final Process process = processBuilder.start();
                 HashMap<String,Object> res = new HashMap<>();
@@ -68,10 +70,10 @@ public class CodeSubmissionService {
                 String stderr = collectProcessStdErrOutput(process);
                 if(stderr!= null && !stderr.equals("")){
                     res.put("success", false);
-                    res.put("output", stderr);
+                    res.put("output", stdout + stderr);
                 }else{
                     res.put("success", true);
-                    res.put("output", stdout);
+                    res.put("output", stdout + stderr);
                 }
                  return res;
             });
@@ -85,12 +87,14 @@ public class CodeSubmissionService {
                 executionResult.setVerdict(ExecutionVerdict.FAILED);
             }
             executionResult.setOutput(parseOutput(output));
+            executionResult.setDate(LocalDateTime.now());
             log.info(output);
 
         } catch (final TimeoutException e) {
             output = "Calculation took to long";
             executionResult.setOutput(parseOutput(output));
             executionResult.setVerdict(ExecutionVerdict.TIME_LIMIT_EXCEPTION);
+            executionResult.setDate(LocalDateTime.now());
             log.info(output);
         } catch (final Exception e) {
             throw new RuntimeException(e);

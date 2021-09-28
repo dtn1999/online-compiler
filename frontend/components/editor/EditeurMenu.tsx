@@ -9,10 +9,6 @@ interface Props {
   handleClick: MouseEventHandler<HTMLDivElement>;
   open: boolean;
   formik: any;
-  handleChangeAndUpdateState: (
-    field: string,
-    e: React.ChangeEvent<any>
-  ) => void;
 }
 
 const EditeurMenu: React.FC<Props> = ({
@@ -21,7 +17,6 @@ const EditeurMenu: React.FC<Props> = ({
   handleClick,
   open,
   formik,
-  handleChangeAndUpdateState,
 }) => {
   return (
     <Menu
@@ -62,12 +57,7 @@ const EditeurMenu: React.FC<Props> = ({
       <div className="w-full h-full p-2">
         <div className="w-full py-1">
           <p className="font-bold text-codeChef text-md py-2"> Theme </p>
-          <select
-            onChange={(event) => {
-              handleChangeAndUpdateState("theme", event);
-            }}
-            className="w-full"
-          >
+          <select onChange={formik.handleChange("theme")} className="w-full">
             {defaultValues.theme.map((theme) => (
               <option key={theme} value={theme}>
                 {theme.replaceAll("_", " ")}
@@ -78,9 +68,7 @@ const EditeurMenu: React.FC<Props> = ({
         <div className="w-full py-1">
           <p className="font-bold text-codeChef text-md py-2"> Tab Size </p>
           <input
-            onChange={(event) => {
-              handleChangeAndUpdateState("tabSize", event);
-            }}
+            onChange={formik.handleChange("tabSize")}
             value={formik.values.tabSize}
             className="w-full"
             type="number"
@@ -90,9 +78,7 @@ const EditeurMenu: React.FC<Props> = ({
         <div className="w-full py-1">
           <p className="font-bold text-codeChef text-md py-2"> Font Size </p>
           <input
-            onChange={(event) => {
-              handleChangeAndUpdateState("fontSize", event);
-            }}
+            onChange={formik.handleChange("fontSize")}
             value={formik.values.fontSize}
             className="w-full"
             type="number"

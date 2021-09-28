@@ -24,4 +24,6 @@ public class CodeSubmissionDTO {
     @NotNull
     @NotEmpty
     private String code;
+
+    private String input="";
 }

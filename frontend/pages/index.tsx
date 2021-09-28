@@ -10,7 +10,8 @@ import {
 } from "../components/editor/editorConfig";
 import Dropzone from "react-dropzone";
 import DragDropWrapper from "../components/DragDropWrapper";
-import { RestClient } from "../rest/restClient";
+import { RestClient, SubmissionResult } from "../rest/restClient";
+import { useFormik } from "formik";
 
 const Editor = dynamic(
   () => {
@@ -25,11 +26,26 @@ const Home: NextPage = () => {
     userEditorSettingInitialValues
   );
 
+  const [loading, setLoading] = React.useState<boolean>(false);
+
+  const formik = useFormik<UserEditorSetting>({
+    initialValues: { ...userEditorSettingInitialValues },
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
   // handles
   const UpdateEditorState = React.useCallback((values: UserEditorSetting) => {
-    console.log(values);
-    setEditorSettings({ ...values });
+    setEditorSettings({ ...formik.values });
+    console.log(formik.values);
   }, []);
+
+  React.useEffect(() => {
+    setEditorSettings({ ...formik.values });
+    console.log("formik values change to ", formik.values);
+  }, [formik.values]);
+
   // reat the file and set it to the code state
   const handleFileLoad = (ev: ProgressEvent<FileReader>) => {
     setCode(ev.target?.result?.toString() || "");
@@ -51,18 +67,24 @@ const Home: NextPage = () => {
 
   // submit the code and get execution result
   const submitCode = React.useCallback(async () => {
-    const executionResult = await RestClient.submitCode(
+    setLoading(true);
+    const result = await RestClient.submitCode(
       code,
+      formik.values.input,
       editorSettings.language
     );
-  }, [code, editorSettings]);
+
+    return {
+      ...result,
+    };
+  }, [code, editorSettings, formik.values.input]);
 
   return (
     <div className="px-40 pt-6 pb-10 bg-gray-100  w-full max-h-full flex flex-col items-center">
       <div className="bg-white shadow-2xl pt-16 px-20 min-h-full pb-10 w-3/4 h-full flex flex-col">
         <ProgramInformation />
         <div className="mt-5 flex-1">
-          <EditorHeader updateEditorState={UpdateEditorState} />
+          <EditorHeader formik={formik} updateEditorState={UpdateEditorState} />
           <Dropzone onDrop={handleDrop}>
             {({ getRootProps, isDragActive }) => (
               <div
@@ -97,6 +119,7 @@ const Home: NextPage = () => {
           <EditorFooter
             handleFileSelect={handleFileSelect}
             handleRunClick={submitCode}
+            formik={formik}
           />
         </div>
       </div>
