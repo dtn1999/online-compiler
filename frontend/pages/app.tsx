@@ -9,7 +9,6 @@ import {
   userEditorSettingInitialValues,
 } from "../components/editor/editorConfig";
 import Dropzone from "react-dropzone";
-import DragDropWrapper from "../components/DragDropWrapper";
 import { RestClient, SubmissionResult } from "../rest/restClient";
 import { useFormik } from "formik";
 
@@ -25,8 +24,6 @@ const Home: NextPage = () => {
   const [editorSettings, setEditorSettings] = React.useState<UserEditorSetting>(
     userEditorSettingInitialValues
   );
-
-  const [loading, setLoading] = React.useState<boolean>(false);
 
   const formik = useFormik<UserEditorSetting>({
     initialValues: { ...userEditorSettingInitialValues },
@@ -67,7 +64,6 @@ const Home: NextPage = () => {
 
   // submit the code and get execution result
   const submitCode = React.useCallback(async () => {
-    setLoading(true);
     const result = await RestClient.submitCode(
       code,
       formik.values.input,
