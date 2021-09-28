@@ -30,7 +30,6 @@ const EditorHeader: React.FC<Props> = ({ updateEditorState, formik }) => {
   const handleClose = () => {
     setAnchorEl(null);
     setOpen(false);
-    updateEditorState(formik.values);
   };
 
   return (
