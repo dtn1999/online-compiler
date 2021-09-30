@@ -31,4 +31,9 @@ public class CodeSubmissionController {
         return ResponseEntity.ok(codeSubmissionService.runCode(codeSubmissionDTO,constraints));
     }
 
+    @GetMapping("")
+    public ResponseEntity ping(){
+        return ResponseEntity.ok( "Response from your ping message");
+    }
+
 }

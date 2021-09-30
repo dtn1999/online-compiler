@@ -5,8 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Created by dtn1999
@@ -19,5 +19,5 @@ import java.time.LocalDateTime;
 public class ExecutionResult {
     private ExecutionVerdict verdict;
     private String output;
-    private LocalDateTime date;
+    private String date;
 }

@@ -13,7 +13,7 @@ export interface CodeSubmission {
 
 export interface SubmissionResult {
     verdict: string,
-    date: Date;
+    date: string;
     output: string;
 }
 

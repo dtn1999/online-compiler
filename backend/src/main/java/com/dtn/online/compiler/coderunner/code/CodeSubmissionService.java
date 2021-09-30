@@ -4,6 +4,7 @@ import com.dtn.online.compiler.coderunner.code.dto.CodeSubmissionDTO;
 import com.dtn.online.compiler.coderunner.code.dto.ExecutionResult;
 import com.dtn.online.compiler.coderunner.code.dto.ExecutionVerdict;
 import com.dtn.online.compiler.coderunner.utils.ApiResponse;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.concurrent.*;
 
@@ -70,12 +72,12 @@ public class CodeSubmissionService {
                 String stderr = collectProcessStdErrOutput(process);
                 if(stderr!= null && !stderr.equals("")){
                     res.put("success", false);
-                    res.put("output", stdout + stderr);
                 }else{
                     res.put("success", true);
-                    res.put("output", stdout + stderr);
                 }
-                 return res;
+                res.put("output", stdout + stderr);
+
+                return res;
             });
 
             HashMap<String, Object> execResult = executionContext.get(maxExecutionTime, TimeUnit.MILLISECONDS);
@@ -87,14 +89,14 @@ public class CodeSubmissionService {
                 executionResult.setVerdict(ExecutionVerdict.FAILED);
             }
             executionResult.setOutput(parseOutput(output));
-            executionResult.setDate(LocalDateTime.now());
+            executionResult.setDate(   LocalDateTime.now().toString() );
             log.info(output);
 
         } catch (final TimeoutException e) {
             output = "Calculation took to long";
             executionResult.setOutput(parseOutput(output));
             executionResult.setVerdict(ExecutionVerdict.TIME_LIMIT_EXCEPTION);
-            executionResult.setDate(LocalDateTime.now());
+            executionResult.setDate( LocalDateTime.now().toString()  );
             log.info(output);
         } catch (final Exception e) {
             throw new RuntimeException(e);
@@ -130,6 +132,7 @@ public class CodeSubmissionService {
 
     @SneakyThrows
     private String getOutputFromStream(InputStream  inputStream) {
+
         BufferedReader stdoutReader =
                 new BufferedReader(new InputStreamReader( inputStream ));
         StringBuilder builder = new StringBuilder();
